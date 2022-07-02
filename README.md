@@ -32,7 +32,7 @@ pull docker image from dockerhub
 `docker pull playtunes/connectword-0.2`.
 
 or build the image
-`docker build -t connectword-0.2 .`.
+`docker build -t playtunes/connectword-0.2 .`.
 
 run `docker compose up -d`
 visit `localhost:8001`.
