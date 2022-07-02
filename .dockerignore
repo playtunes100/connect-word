@@ -3,4 +3,4 @@ connectenv/
 Dockerfile
 docker-compose.yml
 .env
-nginx
+images
