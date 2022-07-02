@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  redis:
+    image: redis:6
+    command: redis-server
+    expose:
+      - "6379"
+  django:
+    image: connectword-0.2
+    command: /bin/sh -c "daphne -b 0.0.0.0 -p 8001 connectword.asgi:application"
+    ports:
+      - "8001:8001"
+    links:
+      - redis:6

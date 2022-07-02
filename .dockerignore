@@ -1,0 +1,6 @@
+__pycache__
+connectenv/
+Dockerfile
+docker-compose.yml
+.env
+nginx
