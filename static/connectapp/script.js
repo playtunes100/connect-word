@@ -3,56 +3,62 @@ document.addEventListener("DOMContentLoaded", () => {
 const buttons = document.querySelectorAll(".keyboard-row button");
 const game = JSON.parse(document.getElementById('room-name').textContent);
 
-        const gameSocket = new WebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/game/'
-            + game
-            + '/'
-        );
-        gameSocket.onopen = function(e) {
-            console.log("online")
-        };
-        let activePlayer = ''
-        gameSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            console.log("Recieved: "+data.message);
-            console.log("Recieved: "+data.usermessage);
-            console.log("Recieved: "+data.letter);
-            console.log("Recieved: "+data.number);
-            updateBoard(data.letter, data.number)
-            activePlayer = data.usermessage
-            
-        };
-        gameSocket.onclose = function(e) {
-            console.error('Socket closed unexpectedly');
-        };
-
-
-if(!document.getElementById('64')){
+const gameSocket = new WebSocket(
+    'ws://'
+    + window.location.host
+    + '/ws/game/'
+    + game
+    + '/'
+);
+gameSocket.onopen = function(e) {
+    console.log("online")
+};
+let activePlayer = ''
+gameSocket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    if(data.type === 'connected_message'){
+        console.log("Recieved connected: "+data.connected);
+    }
+    console.log("Recieved data: "+data);
+    console.log("Recieved message: "+data.message);
+    console.log("Recieved user: "+data.user);
     
-    const gameBox = document.getElementById("box-holder");
-    let counter = 1
-    for (let index = 0; index < 8; index++) {
-        
-        let box_row = document.createElement("div");
-        box_row.classList.add("row");
-        box_row.classList.add("justify-content-center");
-        box_row.setAttribute("id", "r-"+index);
-        gameBox.appendChild(box_row);
-        for(let jindex = 0; jindex < 8; jindex++) {
+    //updateBoard(data.letter, data.number)
+    activePlayer = data.user
+    
+};
+gameSocket.onclose = function(e) {
+    console.error('Socket closed unexpectedly');
+};
+createBoard()
 
+function createBoard(){
+    if(!document.getElementById('64')){
+    
+        const gameBox = document.getElementById("box-holder");
+        let counter = 1
+        for (let index = 0; index < 8; index++) {
             
-            let box = document.createElement("div");
-            box.classList.add("col");
-            box.classList.add("letter-box");
-            box.setAttribute("id", counter);
-            box_row.appendChild(box);
-            counter += 1
-            
+            let box_row = document.createElement("div");
+            box_row.classList.add("row");
+            box_row.classList.add("justify-content-center");
+            box_row.setAttribute("id", "r-"+index);
+            gameBox.appendChild(box_row);
+            for(let jindex = 0; jindex < 8; jindex++) {
+    
+                
+                let box = document.createElement("div");
+                box.classList.add("col");
+                box.classList.add("letter-box");
+                box.setAttribute("id", counter);
+                box_row.appendChild(box);
+                counter += 1
+                
+            }
         }
     }
 }
+
 
 
 const boxes = document.querySelectorAll(".col.letter-box");
@@ -88,21 +94,26 @@ for (let i = 0; i < boxes.length; i++) {
 function selectedBox(box) {
 
     for (let i = 0; i < buttons.length; i++) {
-        buttons[i].onclick = ({ target }) => {
-          const letter = target.getAttribute("data-key");
+        buttons[i].onclick = ({ targetButton }) => {
+            let turn_id = document.getElementById("turn-id")
+            // check if it is player's turn and if the selected box is free
+            if(activePlayer != turn_id.innerHTML & !box.classList.contains("player1submitted") & !box.classList.contains("player2submitted")){
+                const letter = targetButton.getAttribute("data-key");
     
-          if (letter === "enter") {
-            submitLetter(box);
-            return;
-          }
-    
-          if (letter === "del") {
-            deleteLetter();
-            return;
-          }
-          box.innerHTML = letter
+            if (letter === "enter") {
+                submitLetter(box);
+                return;
+            }
+        
+            if (letter === "del") {
+                deleteLetter();
+                return;
+            }
+            box.innerHTML = letter
+            
+            console.log(letter)
+            }
           
-          console.log(letter)
         };
       }
 }
@@ -118,6 +129,8 @@ function deleteLetter(){
 function submitLetter(mess){
     if(mess.innerHTML != ''){
         let turn = document.getElementById("turn-alert")
+        let turn_id = document.getElementById("turn-id")
+        const user = turn_id.innerHTML 
         const message = mess.innerHTML
         const number = mess.getAttribute("id")
         let color = ''
@@ -130,12 +143,13 @@ function submitLetter(mess){
         console.log(color)
         const usermessage = 'playtunes'
         gameSocket.send(JSON.stringify({
-            'message': message,
-            'usermessage': usermessage,
             'letter': message,
             'number': number,
-            'color': color
+            'color': color,
+            'user': user
         }));
+
+
 }
 
 }

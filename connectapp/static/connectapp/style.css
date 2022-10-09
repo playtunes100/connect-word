@@ -1,0 +1,107 @@
+body{
+    background-color: #372c44;
+    color: rgb(255, 255, 255);
+    user-select: none;
+}
+hr{
+    margin: 0rem 0;
+}
+.col:active{
+    background-color: #ffffff8c;
+    
+}
+.selected{
+    
+  border: 4px solid #ffffff !important;
+}
+.player1submitted {
+  background-color: #b59f3b;
+}
+.player2submitted {
+  background-color: #b60d0d8c;
+}
+
+div[class*="letter-box"] {
+    width: 100%;
+    height: 2.5rem;
+    max-width: 2.5rem;
+    max-height: 2.5rem;
+    border: 2px solid #ffffff8c;
+    border-radius: 0%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    line-height: 2rem;
+    font-weight: bold;
+    vertical-align: middle;
+    box-sizing: border-box;
+    text-transform: uppercase;
+    user-select: none;
+}
+
+
+
+#keyboard-container {
+    height: 200px;
+    width: 80%;
+  }
+  
+  .keyboard-row {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto 8px;
+    touch-action: manipulation;
+  }
+  
+  .keyboard-row button {
+    font-family: inherit;
+    font-weight: bold;
+    border: 0;
+    padding: 0;
+    height: 58px;
+    cursor: pointer;
+    background-color: rgb(129, 131, 132);
+    color: rgb(215, 218, 220);
+    flex-grow: 1;
+    text-transform: uppercase;
+    margin-right: 6px;
+    border-radius: 4px;
+    user-select: none;
+  }
+  
+  .keyboard-row button.wide-button {
+    flex-grow: 1.5;
+  }
+  
+  .spacer-half {
+    flex-grow: 0.5;
+  }
+  .square {
+    border: 2px solid rgb(58, 58, 60);
+    min-width: 60px;
+    min-height: 60px;
+    font-size: 50px;
+    font-weight: bold;
+    color: gainsboro;
+    text-transform: uppercase;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }  
+
+  .loading {
+    position: fixed; /* Sit on top of the page content */
+    display: none; 
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #0d0c18bf; /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    text-align:center;
+}

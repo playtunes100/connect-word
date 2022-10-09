@@ -45,14 +45,7 @@ class queen_linked_list:
                     
             
         
-        
-# Adding data elements		
-   def push(self, NewVal):
-      NewNode = Node(NewVal)
-      NewNode.next = self.head
-      if self.head is not None:
-         self.head.prev = NewNode
-      self.head = NewNode
+    
       
    #gets list of values along the horizontal values of the index
    def getHorizontal(self, index):
@@ -169,19 +162,30 @@ class queen_linked_list:
             if node.index == index:
                 return node
             node = node.next
+
+   def get_words(self, game, number):
+        number = int(number)
+        for x, y in game.data.items():
+            self.insertInNode(int(x), y[0], y[1])
+            
+        horizontal = self.getHorizontal(number)
+        vertical = self.getVertical(number)
+        rising = self.getRising(number)
+        falling = self.getFalling(number)
+
+        return horizontal, vertical, rising, falling
+
    
    def insertInNode(self, index, data, color):
         if index < 0 or index >= self.length:
             raise IndexError("index out of range")
-        node = self.head
+        node = self.fetch(index)
+        #To-Do Check if Node already has data
         
-        while (node is not None):
-            if node.index == index:
-                node.data = data
-                node.color = color
-                node = None
-            else:
-                node = node.next
+        node.data = data
+        node.color = color
+                
+
 
 
 # Print the Multi Linked list		

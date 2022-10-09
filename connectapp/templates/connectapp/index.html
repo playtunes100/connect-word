@@ -1,4 +1,4 @@
-{% load static %}
+{% load static%}
 <!doctype html>
 <html lang="en">
   <head>
@@ -8,10 +8,10 @@
     <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-    <link href="{% static 'connectapp/style.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'connectapp/style.css' %}" rel="stylesheet">
 </head>
-  <body>
-      <header>
+<body>
+    <header>
         <nav class="navbar navbar-brand-center navbar-expand-lg navbar-dark">
             <div class="container-fluid">
               
@@ -36,107 +36,27 @@
                         </li>
                     </ul>
                 </div>
-                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="bi bi-gear"></i>
                   </button>
             </div>
         </nav>
         <hr>
-      </header>
-    <h2 style="text-align: center; margin-top: 2rem;">It's <span id="turn-alert" class="badge text fs-3" style="background-color: #b59f3b;">Player 1</span>'s turn</h2>
+    </header>
+    <h2 style="text-align:center; margin:2rem;">What game would you like to join?</h2>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
-    
-    <div class="container-fluid">
-        <div class="row justify-content-evenly">
-            <div class="col-4 justify-content-center" style="text-align: center;"><span class="badge text fs-3" style="background-color: #b59f3b;">Player 1</span></div>
-            <div id="player2" class="col-4" style="text-align: center;"><span class="badge text fs-3" style="background-color: #b60d0d8c;">Player 2</span></div>
+    <div class="row justify-content-center">
+        <div class="col justify-content-center" style="text-align: center; margin-bottom: 2rem;">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Submit">
+            </form>
         </div>
-        <span id="turn-id" style="visibility: hidden;">{{ id }}</span>
-        <div id="box-holder" class="row justify-content-center">
-            
-        <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="background-color: #372c44;">
-              <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">How to play</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <p>The board consists of 8 x 8 squares.</p>
-                <p>Each player gets a turn placing a letter in a square by selecting on the square and selecting a letter.</p>
-                <p>The game is over if a player can make a 3 or more letters English word using only letters placed by the players.</p>
-                <p>The role of the other players is to stop each other from building a word while trying to build a word first.</p>
-                <p>The word can be horizontal, vertical, diagonal or reverse diagonal.</p>
-                <p>Unfortunately the game cannot yet automatically detect a win, the players will have to alert each other of a win.</p>
-                <p>Any player can start First.</p>
-                <p style="color: red; font-weight: bold;">DO NOT REFRESH, IF YOU DO, RESTART THE GAME!</p>
-              
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-  
-              </div>
-            </div>
-          </div>
-        </div>
-
-            
-
-        </div>
-        <div class="row justify-content-center" style=" margin-top: 2rem; position:relative;
-        bottom: 0px;">
-            <div id="keyboard-container" style="">
-                <div class="keyboard-row">
-                  <button data-key="q">q</button>
-                  <button data-key="w">w</button>
-                  <button data-key="e">e</button>
-                  <button data-key="r">r</button>
-                  <button data-key="t">t</button>
-                  <button data-key="y">y</button>
-                  <button data-key="u">u</button>
-                  <button data-key="i">i</button>
-                  <button data-key="o">o</button>
-                  <button data-key="p">p</button>
-                </div>
-                <div class="keyboard-row">
-                  <div class="spacer-half"></div>
-                  <button data-key="a">a</button>
-                  <button data-key="s">s</button>
-                  <button data-key="d">d</button>
-                  <button data-key="f">f</button>
-                  <button data-key="g">g</button>
-                  <button data-key="h">h</button>
-                  <button data-key="j">j</button>
-                  <button data-key="k">k</button>
-                  <button data-key="l">l</button>
-                  <div class="spacer-half"></div>
-                </div>
-                <div class="keyboard-row">
-                  <button data-key="del" class="wide-button">Del</button>
-                  <button data-key="z">z</button>
-                  <button data-key="x">x</button>
-                  <button data-key="c">c</button>
-                  <button data-key="v">v</button>
-                  <button data-key="b">b</button>
-                  <button data-key="n">n</button>
-                  <button data-key="m">m</button>
-                  <button data-key="enter" class="wide-button">Enter</button>
-                </div>
-              </div>
-        </div>
-            
-              
+        
+       
     </div>
-  </body>
-  {{ room_name|json_script:"room-name" }}
-  <script src="{% static 'connectapp/script.js' rel="script" type="script" %}"></script>
-  <script>
-    var modal = new bootstrap.Modal(
-      document.getElementById('staticBackdrop')
-    )
-    modal.show()
-  </script>
-  
+    
+</body>
 </html>
